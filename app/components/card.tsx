@@ -3,5 +3,5 @@ type Props = {
 }
 
 export function Card({children}: Props) {
-  return <div className="border border-gray-800 rounded p-4">{children}</div>;
+  return <div className="border border-border rounded-lg p-4">{children}</div>;
 }

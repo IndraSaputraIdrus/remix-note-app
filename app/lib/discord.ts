@@ -73,3 +73,23 @@ export async function sendMessage(channelId: string, content: string) {
     return null;
   }
 }
+
+export async function getMessageById(id: string, channelId: string) {
+  const client = await getClient();
+  const guild = await getGuild(client);
+  const channel = guild.channels.cache.get(channelId);
+  if (!channel || channel.type !== ChannelType.GuildText) return null;
+
+  const message = await channel.messages.fetch(id);
+  if (!message) return null;
+
+  return {
+    id: message.id,
+    content: message.content,
+    author: {
+      id: message.author.id,
+      username: message.author.username,
+    },
+    createdTimestamp: message.createdTimestamp,
+  };
+}
