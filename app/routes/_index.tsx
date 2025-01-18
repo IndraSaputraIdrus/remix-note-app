@@ -1,7 +1,8 @@
 import type { MetaFunction } from "@remix-run/node";
 import { useLoaderData, Link } from "@remix-run/react";
 import { Button } from "~/components/button";
-import { Card } from "~/components/card"; import { getMessages } from "~/lib/discord";
+import { Card } from "~/components/card";
+import { getMessages } from "~/lib/discord";
 import { Note } from "~/lib/types";
 import { formatDate, parseContent } from "~/lib/utils";
 import { Plus } from "lucide-react";
@@ -16,7 +17,7 @@ export const meta: MetaFunction = () => {
 
 export const loader = async () => {
   const channelId = process.env.DISCORD_CHANNEL_ID;
-  invariant(channelId, "Missing channel id")
+  invariant(channelId, "Missing channel id");
 
   const notes = await getMessages(channelId);
 
@@ -31,9 +32,11 @@ export default function Index() {
       <main className="max-w-xl w-full mx-auto h-full px-5 py-8">
         <div className="mb-5 flex items-center gap-5">
           <h1 className="text-2xl font-bold">My note</h1>
-          <Button variant="ghost" size="icon">
-            <Plus className="size-4" />
-          </Button>
+          <Link to="/add">
+            <Button variant="ghost" size="icon">
+              <Plus className="size-4" />
+            </Button>
+          </Link>
         </div>
 
         <div className="flex flex-col gap-5">

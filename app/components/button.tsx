@@ -4,7 +4,7 @@ type Props = {
   children: React.ReactNode;
   size?: "default" | "icon" | "sm";
   variant?: "default" | "ghost";
-} & React.HTMLAttributes<HTMLButtonElement>;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>
 
 export function Button({
   children,
