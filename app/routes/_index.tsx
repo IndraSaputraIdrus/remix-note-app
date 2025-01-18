@@ -1,5 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
-import { useLoaderData, Link } from "@remix-run/react";
+import { useLoaderData, Link, ClientLoaderFunction } from "@remix-run/react";
 import { Button } from "~/components/button";
 import { Card } from "~/components/card";
 import { getMessages } from "~/lib/discord";
@@ -7,6 +7,8 @@ import { Note } from "~/lib/types";
 import { formatDate, parseContent } from "~/lib/utils";
 import { Plus } from "lucide-react";
 import invariant from "tiny-invariant";
+import { cacheClientLoader, useCachedLoaderData } from "remix-client-cache";
+import { useEffect } from "react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -21,11 +23,17 @@ export const loader = async () => {
 
   const notes = await getMessages(channelId);
 
-  return Response.json(notes);
+  return Response.json({ data: notes });
 };
 
+export const clientLoader: ClientLoaderFunction = (args) => {
+  return cacheClientLoader(args);
+};
+
+clientLoader.hydrate = true;
+
 export default function Index() {
-  const data = useLoaderData<Note[]>();
+  const { data } = useCachedLoaderData<{ data: Note[] }>();
 
   return (
     <div className="min-h-dvh flex items-start justify-center">
