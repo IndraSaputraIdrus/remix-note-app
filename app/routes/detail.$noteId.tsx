@@ -53,7 +53,9 @@ export default function DetailPage() {
             </div>
             <div className="mb-3 text-lg text-secondary">{content}</div>
             <div>
-              <Button>Edit</Button>
+              <Link to={`/edit/${data.id}`}>
+                <Button>Edit</Button>
+              </Link>
             </div>
           </Card>
         </div>

@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 type Props = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 export function Textarea({ ...props }: Props) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(props.value ? props.value : "");
   const elementRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {

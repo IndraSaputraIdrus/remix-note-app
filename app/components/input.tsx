@@ -1,10 +1,14 @@
 import clsx from "clsx";
+import { useState } from "react";
 
-type Props = React.InputHTMLAttributes<HTMLInputElement>
+type Props = React.InputHTMLAttributes<HTMLInputElement>;
 
 export function Input({ ...props }: Props) {
+  const [value, setValue] = useState(props.value ? props.value : "");
+
   return (
     <input
+      {...props}
       className={clsx(
         "w-full px-3 py-2",
         "rounded-md",
@@ -12,7 +16,8 @@ export function Input({ ...props }: Props) {
         "border border-border",
         "focus:outline-none focus:ring focus:ring-secondary"
       )}
-      {...props}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
     />
   );
 }

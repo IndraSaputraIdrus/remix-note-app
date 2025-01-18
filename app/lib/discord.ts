@@ -93,3 +93,17 @@ export async function getMessageById(id: string, channelId: string) {
     createdTimestamp: message.createdTimestamp,
   };
 }
+
+export async function editMessage(id: string, channelId: string, content: string) {
+  const client = await getClient()
+  const guild = await getGuild(client)
+  const channel = guild.channels.cache.get(channelId)
+  if (!channel || channel.type !== ChannelType.GuildText) return null;
+
+  const message = await channel.messages.fetch(id);
+  if (!message) return null;
+
+  message.edit(content)
+
+  return true
+}
